@@ -1,8 +1,19 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { updateProfile } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import getImage from "../utils/profile";
+import { HERO } from "../utils/constants";
 
 function Login() {
+  const dispatch = useDispatch();
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const name = useRef(null);
@@ -13,23 +24,66 @@ function Login() {
     setSignInForm((prev) => !prev);
   };
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     event.preventDefault();
 
-    console.log(email.current.value, password.current.value);
-    if (isSignInForm) {
-      const message = checkValidData(
+    const message = checkValidData(
+      email.current.value,
+      password.current.value,
+      !isSignInForm ? name.current.value : undefined
+    );
+    setErrorMessage(message);
+    if (message) return;
+
+    if (!isSignInForm) {
+      // sign up logic
+
+      createUserWithEmailAndPassword(
+        auth,
         email.current.value,
         password.current.value
-      );
-      setErrorMessage(message);
+      )
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          const url = getImage();
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: url,
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+        });
     } else {
-      const message = checkValidData(
+      //sign in logic
+
+      signInWithEmailAndPassword(
+        auth,
         email.current.value,
-        password.current.value,
-        name.current.value
-      );
-      setErrorMessage(message);
+        password.current.value
+      )
+        .then(() => {})
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage("User not found");
+        });
     }
   };
 
@@ -38,7 +92,7 @@ function Login() {
       <Header />
       <div className="w-full h-screen absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/fbf440b2-24a0-49f5-b2ba-a5cbe8ea8736/web/CA-en-20250324-TRIFECTA-perspective_e079da03-fcf7-467b-afca-16d4db13cd33_large.jpg"
+          src={HERO}
           alt="Hero Image"
           className="w-full h-full object-cover"
         />

@@ -1,5 +1,11 @@
+import Header from "./Header";
+
 function Browse() {
-  return <div>BROWSE</div>;
+  return (
+    <div>
+      <Header />
+    </div>
+  );
 }
 
 export default Browse;
