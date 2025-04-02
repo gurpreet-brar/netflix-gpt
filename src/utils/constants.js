@@ -7,7 +7,7 @@ export const HERO =
 export const API_OPTIONS = {
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+    Authorization: `Bearer ${import.meta.env.VITE_API_KEY} `,
   },
 };
 
