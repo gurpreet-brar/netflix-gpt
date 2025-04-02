@@ -11,6 +11,7 @@ const useTrendingMovies = () => {
       "https://api.themoviedb.org/3/trending/movie/day?",
       API_OPTIONS
     );
+    console.log(response);
     dispatch(addTrendingMovies(response.data.results));
   };
 
