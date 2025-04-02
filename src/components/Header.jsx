@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { auth } from "../utils/firebase";
+import { auth } from "../utils/firebase.js";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
 import { LOGO } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice.js";
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const toggle = useSelector((store) => store.gpt.showGptSearch);
+
   const user = useSelector((store) => store.user);
+
+  const handleGptClick = () => {
+    dispatch(toggleGptSearchView());
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -23,10 +30,9 @@ function Header() {
             photoURL: photoURL,
           })
         );
-        console.log("Redirecting user to browse page ");
+
         navigate("/browse");
       } else {
-        console.log("user redirected to login page");
         dispatch(removeUser());
         navigate("/");
       }
@@ -44,11 +50,17 @@ function Header() {
   };
 
   return (
-    <div className="absolute px-8 py-2 z-40 bg-gradient-to-b from-black/40 w-screen flex justify-between items-center">
+    <div className="absolute px-8 py-2 z-40  w-screen flex justify-between items-center">
       <img className="w-44" src={LOGO} />
-      <div className="flex gap-4">
-        <img className="h-6" src={user?.photoURL} />
-        {user && (
+      {user && (
+        <div className="flex gap-4 items-center">
+          <button
+            className="text-sm py-2 px-4 text-white bg-purple-500 rounded-md cursor-pointer hover:bg-purple-500/80 active:scale-95"
+            onClick={handleGptClick}
+          >
+            {toggle ? "HomePage" : "GPT Search"}
+          </button>
+          <img className="h-6" src={user?.photoURL} />
           <button
             onClick={handleSignOut}
             type="submit"
@@ -56,8 +68,8 @@ function Header() {
           >
             Sign Out
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
