@@ -3,3 +3,12 @@ export const LOGO =
 
 export const HERO =
   "https://assets.nflxext.com/ffe/siteui/vlv3/fbf440b2-24a0-49f5-b2ba-a5cbe8ea8736/web/CA-en-20250324-TRIFECTA-perspective_e079da03-fcf7-467b-afca-16d4db13cd33_large.jpg";
+
+export const API_OPTIONS = {
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${import.meta.env.VITE_API_KEY} `,
+  },
+};
+
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w780";
