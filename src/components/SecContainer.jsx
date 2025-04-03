@@ -21,7 +21,6 @@ function SecContainer() {
         <MovieList title={"Popular"} movies={movies?.popularMovies} />
 
         <MovieList title={"Upcoming Movies"} movies={movies?.upcomingMovies} />
-        <MovieList title={"Horror"} movies={movies?.nowPlayingMovies} />
       </div>
     </div>
   );

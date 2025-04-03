@@ -6,9 +6,9 @@ function MovieList({ title, movies }) {
       <h1 className="text-[1.4vw] pb-4"> {title}</h1>
       <div className="flex overflow-x-scroll overflow-y-visible">
         <div className="flex gap-2">
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} posterPath={movie.poster_path} />
-          ))}
+          {movies.map((movie) => {
+            return <MovieCard key={movie.id} posterPath={movie.poster_path} />;
+          })}
         </div>
       </div>
     </div>

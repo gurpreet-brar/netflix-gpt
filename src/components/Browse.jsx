@@ -7,6 +7,7 @@ import useTrendingMovies from "../hooks/useTrendingMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
+import Footer from "./Footer";
 
 function Browse() {
   useNowPlayingMovies();
@@ -18,15 +19,20 @@ function Browse() {
   return (
     <div>
       <Header />
-      {toggle ? (
-        <GptSearch />
-      ) : (
-        <>
-          {" "}
-          <MainContainer />
-          <SecContainer />
-        </>
-      )}
+      <div>
+        {toggle ? (
+          <GptSearch />
+        ) : (
+          <>
+            {" "}
+            <MainContainer />
+            <SecContainer />
+          </>
+        )}
+      </div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }
