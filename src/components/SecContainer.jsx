@@ -13,7 +13,7 @@ function SecContainer() {
     return;
 
   return (
-    <div className="bg-black text-white -mt-40 relative z-20">
+    <div className="bg-black text-white -mt-10 relative z-20">
       {/* Movie list component  */}
       <div>
         <MovieList title={"Now Playing"} movies={movies?.nowPlayingMovies} />

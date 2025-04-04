@@ -4,7 +4,7 @@ import insta from "../assets/Instagram.svg";
 import twitter from "../assets/X_twitter.svg";
 function Footer() {
   return (
-    <div className="bg-black py-15 px-12 flex flex-col gap-8 ">
+    <div className="bg-black py-15 px-12 flex flex-col sm:gap-8 gap-4">
       <div className="flex gap-5">
         <a href="http://www.facebook.com" target="_blank">
           {" "}
@@ -18,7 +18,7 @@ function Footer() {
           <img src={twitter} />
         </a>
       </div>
-      <div className="text-white/50 text-sm flex gap-40 mt-10">
+      <div className="text-white/50 text-sm flex sm:gap-40 sm:flex-row flex-col gap-8 mt-10">
         <div className="flex gap-4 flex-col">
           <p>Privacy</p>
           <p>Contact Us</p>

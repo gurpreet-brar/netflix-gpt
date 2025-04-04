@@ -44,19 +44,19 @@ function GptSearchBar() {
   };
 
   return (
-    <div className="pt-[15%] flex justify-center">
+    <div className="md:pt-[15%] pt-[25%] flex justify-center">
       <form
-        className="w-1/2 bg-black grid grid-cols-12 rounded-md"
+        className="md:w-1/2 bg-black grid grid-cols-12 rounded-md"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
           type="text"
-          className="py-2 px-4 m-4 col-span-9 bg-white rounded-md outline-0"
+          className="py-2 px-4 m-4 col-span-9 bg-white rounded-md outline-0 text-sm sm:text-md"
           placeholder="What would you like to watch today?"
         />
         <button
-          className="col-span-3 m-4 py-2 px-4 bg-red-700 text-white rounded-lg cursor-pointer"
+          className="col-span-3 m-4 py-2 px-4 text-sm sm:text-md bg-red-700 text-white rounded-lg cursor-pointer"
           onClick={handleGptSearchClick}
         >
           Search
